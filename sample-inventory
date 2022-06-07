@@ -1,0 +1,12 @@
+192.168.0.10
+cart.dev.roboshop.internal
+192.168.2.[10:20]
+
+[DEV]
+catalogue.dev.roboshop.internal
+user.dev.roboshop.internal
+
+[CATALOGUE]
+catalogue.dev.roboshop.internal
+catalogue.prod.roboshop.internal
+

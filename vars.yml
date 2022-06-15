@@ -6,3 +6,13 @@
     - name: Print Play level variables
       ansible.builtin.debug:
         msg: URL = {{URL}}
+
+- name: Variable from files
+  hosts: all
+  vars_files:
+    - sample-vars.yml
+  tasks:
+    - name : Print variables from file
+      ansible.builtin.debug:
+        msg: URL = {{URL}}
+

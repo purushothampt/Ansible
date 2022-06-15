@@ -1,60 +1,8 @@
-- name: Play level variable
+- name: Play Level Variables
   hosts: all
   vars:
     URL: play.example.com
   tasks:
-    - name: Print URL
+    - name: Print Play level variables
       ansible.builtin.debug:
         msg: URL = {{URL}}
-- name: Play level variable from file
-  hosts: all
-  vars_files:
-    - sample-vars.yml
-  tasks:
-    - name: Print URL from file
-      ansible.builtin.debug:
-        msg: URL = {{URL}}
-- name: Play level variable from tasks
-  hosts: all
-  tasks:
-    - name: Print URL from tasks
-      ansible.builtin.debug:
-        msg: URL = {{URL}}
-      vars:
-        URL: tasks.example.com
-
-- name: Variables from Inventory
-  hosts: all
-  tasks:
-    - name: Print URL from Inventory
-      ansible.builtin.debug:
-        msg: URL = {{URL}}
-- name: Variables from Predefined
-  hosts: all
-  tasks:
-    - name: Print Architecture details
-      ansible.builtin.debug:
-        msg: Architecture = {{ansible_architecture}}, IP Address = {{ansible_eth0.ipv4.address}}
-
-- name: Example on set variable
-  hosts: all
-  tasks:
-    - name: Set a Variable
-      ansible.builtin.shell: uptime
-      register: OUT
-    - name: Print output of Shell
-      ansible.builtin.debug:
-        msg: "{{OUT.stdout}}"
-
-- name: Example using set Fact
-  hosts: all
-  tasks:
-    - name: Set a variable
-      ansible.builtin.shell: uptime
-      register: OUT
-    - name: Set fact on the Variable
-      ansible.builtin.set_fact:
-        OUTPUT: "{{OUT.stdout}}"
-    - name: Print output of shell
-      ansible.builtin.debug:
-        msg: "{{OUTPUT}}"

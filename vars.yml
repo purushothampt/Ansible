@@ -32,3 +32,9 @@
       ansible.builtin.debug:
         msg: URL = {{URL}}
 
+- name: Pre Defined Variables
+  hosts: all
+  tasks:
+    - name: Print predefined variables
+      ansible.builtin.debug:
+        msg: IP Address = {{ansible_eth0.ipv4.address}}

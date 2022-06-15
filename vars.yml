@@ -45,3 +45,16 @@
     - name: Print output of Shell
       ansible.builtin.debug:
         msg: "{{OUT.stdout}}"
+
+- name: Example using set Fact
+  hosts: all
+  tasks:
+    - name: Set a variable
+      ansible.builtin.shell: uptime
+        register: OUT
+    - name: Set fact on the Variable
+      ansible.builtin.set_fact:
+        OUTPUT: "{{OUT.stdout}}"
+    - name: Print output of shell
+      ansible.builtin.debug:
+        msg: "{{OUTPUT}}"

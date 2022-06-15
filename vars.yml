@@ -16,3 +16,12 @@
       ansible.builtin.debug:
         msg: URL = {{URL}}
 
+- name: Variable from tasks
+  hosts: all
+  tasks:
+    - name: Print Variable from tasks
+      ansible.buitlin.debug:
+        msg: URL = {{URL}}
+        vars:
+          URL: tasks.example.com
+

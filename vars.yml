@@ -35,3 +35,13 @@
     - name: Print Architecture details
       ansible.builtin.debug:
         msg: Architecture = {{ansible_architecture}}, IP Address = {{ansible_eth0.ipv4.address}}
+
+- name: Example on set variable
+  hosts: all
+  tasks:
+    - name: Set a Variable
+      ansible.builtin.shell: uptime
+      register: OUT
+    - name: Print output of Shell
+      ansible.builtin.debug:
+        msg: "OUT"

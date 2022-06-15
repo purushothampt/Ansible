@@ -51,7 +51,7 @@
   tasks:
     - name: Set a variable
       ansible.builtin.shell: uptime
-        register: OUT
+      register: OUT
     - name: Set fact on the Variable
       ansible.builtin.set_fact:
         OUTPUT: "{{OUT.stdout}}"

@@ -29,3 +29,9 @@
     - name: Print URL from Inventory
       ansible.builtin.debug:
         msg: URL = {{URL}}
+- name: Variables from Predefined
+  hosts: all
+  tasks:
+    - name: Print Architecture details
+      ansible.builtin.debug:
+        msg: Architecture = {{ansible_architecture}}, IP Address = {{ansible_eth0.features.highdma}}

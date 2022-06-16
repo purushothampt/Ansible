@@ -61,8 +61,8 @@
         OUTPUT: "{{OUT.stdout}}"
 
     - name: Print the Variable from set fact
-        ansible.builtin.debug:
-          msg: "{{OUTPUT}}"
+      ansible.builtin.debug:
+        msg: "{{OUTPUT}}"
 
 
 

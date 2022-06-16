@@ -38,3 +38,14 @@
     - name: Print predefined variables
       ansible.builtin.debug:
         msg: IP Address = {{ansible_eth0.ipv4.address}}
+
+- name: Register a Variable
+  hosts: all
+  tasks:
+    - name: Register to a Variable
+      ansible.builtin.shell: uptime
+        register: OUT
+    - name: Print the Variable
+      ansible.builtin.debug:
+        msg: "{{OUT}}"
+

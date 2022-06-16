@@ -53,7 +53,7 @@
   hosts: all
   tasks:
     - name: Register to a variable
-      ansible.builtin.debug: uptime
+      ansible.builtin.shell: uptime
       register: OUT
 
     - name: set a fact to a variable

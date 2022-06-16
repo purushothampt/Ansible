@@ -44,7 +44,7 @@
   tasks:
     - name: Register to a Variable
       ansible.builtin.shell: uptime
-        register: OUT
+      register: OUT
     - name: Print the Variable
       ansible.builtin.debug:
         msg: "{{OUT}}"

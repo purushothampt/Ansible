@@ -1,0 +1,5 @@
+- name: Install Catalogue component
+  hosts: CATALOGUE
+  become: yes
+  roles:
+    - catalogue

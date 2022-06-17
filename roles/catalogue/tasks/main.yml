@@ -1,5 +1,3 @@
 - name: Install Catalogue component
-  hosts: CATALOGUE
-  become: yes
-  roles:
-    - catalogue
+  ansible.buitin.debug:
+    msg: catalogue

@@ -11,7 +11,7 @@
 #    - mongodb
 
 - name: Setup Roboshop Project
-  hosts: '{{HOSTS}}'
+  hosts: "{{HOSTS}}"
   become: yes
   roles:
     - '{{role_name}}'

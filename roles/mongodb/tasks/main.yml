@@ -34,11 +34,10 @@
     state: started
     enabled: yes
 
-- name: Extract mongoDB files
-  ansible.builtin.unarchive:
-    src: https://github.com/roboshop-devops-project/mongodb/archive/main.zip
-    dest: /tmp
-    remote_src: yes
+- name: Download and Extract mongoDB
+  include_role:
+    name: common
+    tasks_from: download
 
 #- name: Load Catalogue Schema
 #  community.mongodb.mongodb_shell:

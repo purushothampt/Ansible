@@ -1,4 +1,5 @@
-- name: Configure Catalogue Component
+- name: Configure User Component
   include_role:
     name: common
     tasks_from: nodejs
+

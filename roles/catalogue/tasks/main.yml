@@ -58,7 +58,7 @@
 
 - name: Install npm packages based on package.json.
   community.general.npm:
-    path: home/roboshop/catalogue/
+    path: home/roboshop/catalogue
   become_user: roboshop
 
 

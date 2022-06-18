@@ -1,0 +1,23 @@
+- name: Create redis repo file
+  ansible.builtin.copy:
+    src: redis.repo
+    dest: /etc/yum.repos.d/redis.repo
+    remote_src: yes
+
+- name: Install redis package
+  ansible.builtin.yum:
+    name: redis
+    state: installed
+
+- name: update the bindIP
+  ansible.builtin.replace:
+    path: /etc/redis.conf
+    regexp: '127.0.0.1'
+    replace: '0.0.0.0'
+
+- name: Start redis database
+  ansible.builtin.systemd:
+    name: redis
+    state: restarted
+    enabled: yes
+

@@ -2,7 +2,6 @@
   ansible.builtin.copy:
     src: redis.repo
     dest: /etc/yum.repos.d/redis.repo
-    remote_src: yes
 
 - name: Install redis package
   ansible.builtin.yum:

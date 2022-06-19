@@ -3,6 +3,11 @@
     src: redis.repo
     dest: /etc/yum.repos.d/redis.repo
 
+- name: uninstall redis package
+  ansible.builtin.yum:
+    name: redis
+    state: removed
+
 - name: Install redis package
   ansible.builtin.yum:
     name: redis-6.2.7*

@@ -1,5 +1,5 @@
 - name: Extract NodeJS repos
-  ansible.builtin.shell: curl -sL https://rpm.nodesource.com/setup_lts.x | bash
+  ansible.builtin.shell: curl -sL https://rpm.nodesource.com/setup_lts.x | bash -
 
 - name: Install NodeJS packages
   ansible.builtin.yum:

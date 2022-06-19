@@ -22,7 +22,7 @@
 
 - name: Start redis database
   ansible.builtin.systemd:
-    name: redis-6.2.7*
+    name: redis
     state: restarted
     enabled: yes
 

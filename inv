@@ -3,10 +3,10 @@ frontend.roboshop.internal
 [MONGODB]
 mongodb.roboshop.internal
 [CATALOGUE]
-172.31.89.64
+catalogue.roboshop.internal
 [REDIS]
 redis.roboshop.internal
 [USER]
 user.roboshop.internal
 [CART]
-172.31.91.186
+cart.roboshop.internal

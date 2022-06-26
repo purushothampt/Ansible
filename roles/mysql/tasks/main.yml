@@ -1,24 +1,3 @@
-
-#    1. Now a default root password will be generated and given in the log file.
-#
-#    ```bash
-#    # grep temp /var/log/mysqld.log
-#    ```
-#
-#    1. Next, We need to change the default root password in order to start using the database service. Use password `RoboShop@1` or any other as per your choice. Rest of the options you can choose `No`
-#
-#    ```bash
-#    # mysql_secure_installation
-#    ```
-#
-#    1. You can check the new password working or not using the following command in MySQL
-#
-#    First lets connect to MySQL
-#
-#    ```bash
-#    # mysql -uroot -pRoboShop@1
-#    ```
-#
 #    Once after login to MySQL prompt then run this SQL Command.
 #
 #    ```sql
@@ -106,6 +85,12 @@
     - name: Set the new root password
       ansible.builtin.shell: mysql --connect-expired-password -uroot -p"{{DEFAULT_ROOT_PASSWORD.stdout}}" </tmp/rootpass.sql
 
+- name: check validate password plugin is removed
+  ansible.builtin.shell: echo 'show plugins' | mysql -uroot -pRoboShop@1 | grep validate_password
+  register: plugin_info
 
+- name: Print the output of Plugin info
+  ansible.builtin.debug:
+    msg: "{{plugin_info}}"
 
 

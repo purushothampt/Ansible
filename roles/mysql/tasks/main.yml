@@ -72,6 +72,11 @@
     login_user: root
     login_password: RoboShop@1
   ignore_errors: yes
+  register: mysql_stat
+
+- name: display the output of register variable
+  ansible.builtin.debug:
+    msg: "{mysql_stat}"
 
 
 

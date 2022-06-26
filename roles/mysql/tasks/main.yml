@@ -96,11 +96,14 @@
       ansible.builtin.copy:
         src: validatepass.sql
         dest: /tmp/validatepass.sql
-    - name: Unisall Plugin
+
+    - name: Uninstall Plugin
       community.mysql.mysql_db:
         state: import
         name: all
         target: /tmp/validatepass.sql
+        login_user: root
+        login_password: RoboShop@1
 
 
 

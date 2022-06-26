@@ -64,7 +64,11 @@
     state: started
     enabled: yes
 
-
+# check if mysql new password is able to connect to server, if not connected then change the password
+- name: Collect all possible information using passwordless root access
+  mysql_info:
+    login_user: root
+    login_password: RoboShop@1
 
 
 

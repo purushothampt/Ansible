@@ -73,21 +73,39 @@
     login_password: RoboShop@1
   ignore_errors: yes
   register: mysql_stat
+#
+#- name: Create Default root password
+#  when: mysql_stat.failed
+#  ansible.builtin.shell: grep 'temporary password' /var/log/mysqld.log | awk '{print $NF}'
+#  register: DEFAULT_ROOT_PASSWORD
+#
+#- name: Copy the command to Set root password
+#  when: mysql_stat.failed
+#  ansible.builtin.copy:
+#    src: rootpass.sql
+#    dest: /tmp/rootpass.sql
+#
+#- name: Set the new root password
+#  when: mysql_stat.failed
+#  ansible.builtin.shell: mysql --connect-expired-password -uroot -p"{{DEFAULT_ROOT_PASSWORD.stdout}}" </tmp/rootpass.sql
 
-- name: Create Default root password
-  when: mysql_stat.failed
-  ansible.builtin.shell: grep 'temporary password' /var/log/mysqld.log | awk '{print $NF}'
-  register: DEFAULT_ROOT_PASSWORD
+# above commented statements can be written in block as below
 
-- name: Copy the command to Set root password
+- name: Block for resetting password
   when: mysql_stat.failed
-  ansible.builtin.copy:
-    src: rootpass.sql
-    dest: /tmp/rootpass.sql
+  block:
+    - name: Create Default root password
+      ansible.builtin.shell: grep 'temporary password' /var/log/mysqld.log | awk '{print $NF}'
+      register: DEFAULT_ROOT_PASSWORD
 
-- name: Set the new root password
-  when: mysql_stat.failed
-  ansible.builtin.shell: mysql --connect-expired-password -uroot -p"{{DEFAULT_ROOT_PASSWORD.stdout}}" </tmp/rootpass.sql
+    - name: Copy the command to Set root password
+      ansible.builtin.copy:
+      src: rootpass.sql
+      dest: /tmp/rootpass.sql
+
+    - name: Set the new root password
+      ansible.builtin.shell: mysql --connect-expired-password -uroot -p"{{DEFAULT_ROOT_PASSWORD.stdout}}" </tmp/rootpass.sql
+
 
 
 

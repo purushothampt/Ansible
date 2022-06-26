@@ -76,7 +76,7 @@
 
 - name: display the output of register variable
   ansible.builtin.debug:
-    msg: "{{mysql_stat}}"
+    msg: "{{mysql_stat.failed}}"
 
 
 

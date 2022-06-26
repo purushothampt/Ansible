@@ -84,7 +84,7 @@
 
 - name: Debug Default Root Password
   ansible.builtin.debug:
-    msg: "{{DEFAULT_ROOT_PASSWORD}}"
+    msg: "{{DEFAULT_ROOT_PASSWORD.stdout}}"
 
 #- name: Copy the command to Set root password
 #  ansible.builtin.copy:

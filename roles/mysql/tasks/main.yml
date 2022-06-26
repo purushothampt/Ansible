@@ -86,13 +86,13 @@
   ansible.builtin.debug:
     msg: "{{DEFAULT_ROOT_PASSWORD.stdout}}"
 
-#- name: Copy the command to Set root password
-#  ansible.builtin.copy:
-#    src: rootpass.sql
-#    dest: /tmp/rootpass.sql
-#
-#- name: Set the new root password
-#  ansible.builtin.shell: mysql --connect-expired-password -uroot -p"${DEFAULT_ROOT_PASSWORD.stdout}" </tmp/rootpass.sql
+- name: Copy the command to Set root password
+  ansible.builtin.copy:
+    src: rootpass.sql
+    dest: /tmp/rootpass.sql
+
+- name: Set the new root password
+  ansible.builtin.shell: mysql --connect-expired-password -uroot -p"${DEFAULT_ROOT_PASSWORD.stdout}" </tmp/rootpass.sql
 
 
 

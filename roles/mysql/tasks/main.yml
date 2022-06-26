@@ -89,8 +89,19 @@
   ansible.builtin.shell: echo 'show plugins' | mysql -uroot -pRoboShop@1 | grep validate_password
   register: plugin_info
 
-- name: Print the output of Plugin info
-  ansible.builtin.debug:
-    msg: "{{plugin_info}}"
+- name: unsinstall validate password plugin
+  when: plugin_info.rc == 0
+  block:
+    - name: copy the validate password sql file
+      ansible.builtin.copy:
+        src: validatepass.sql
+        dest: /tmp/validatepass.sql
+    - name: Unisall Plugin
+      community.mysql.mysql_db:
+        state: import
+        name: all
+        target: /tmp/validatepass.sql
+
+
 
 

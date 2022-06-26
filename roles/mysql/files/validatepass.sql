@@ -1,0 +1,1 @@
+echo 'uninstall plugin validate_password' >/tmp/validatepasswd.sql

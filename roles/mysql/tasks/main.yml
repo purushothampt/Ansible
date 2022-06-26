@@ -74,24 +74,19 @@
   ignore_errors: yes
   register: mysql_stat
 
-- name: display the output of register variable
-  ansible.builtin.debug:
-    msg: "{{mysql_stat.failed}}"
-
 - name: Create Default root password
+  when: mysql_stat.failed
   ansible.builtin.shell: grep 'temporary password' /var/log/mysqld.log | awk '{print $NF}'
   register: DEFAULT_ROOT_PASSWORD
 
-- name: Debug Default Root Password
-  ansible.builtin.debug:
-    msg: "{{DEFAULT_ROOT_PASSWORD.stdout}}"
-
 - name: Copy the command to Set root password
+  when: mysql_stat.failed
   ansible.builtin.copy:
     src: rootpass.sql
     dest: /tmp/rootpass.sql
 
 - name: Set the new root password
+  when: mysql_stat.failed
   ansible.builtin.shell: mysql --connect-expired-password -uroot -p"{{DEFAULT_ROOT_PASSWORD.stdout}}" </tmp/rootpass.sql
 
 

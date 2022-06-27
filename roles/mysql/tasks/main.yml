@@ -93,12 +93,19 @@
   ansible.builtin.shell: echo 'show plugins' | mysql -uroot -pRoboShop@1 | grep validate_password
   register: plugin_info
 
-- name: Uninstall Plugin
+- name: Copy the Plugin and Uninstall
   when: plugin_info.rc == 0
-  community.mysql.mysql_db:
-    state: import
-    name: all
-    target: plugin.sql
-    login_user: root
-    login_password: RoboShop@1
+  block:
+    - name: copy the Plugin
+      ansible.builtin.copy:
+        src: plugin.sql
+        dest: /tmp/plugin.sql
+
+    - name: Uninstall Plugin
+      community.mysql.mysql_db:
+        state: import
+        name: all
+        target: /tmp/plugin.sql
+        login_user: root
+        login_password: RoboShop@1
 

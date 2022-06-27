@@ -95,10 +95,10 @@
 
 - name: Uninstall Plugin
   when: plugin_info.rc == 0
-    community.mysql.mysql_db:
-      state: import
-      name: all
-      target: plugin.sql
-      login_user: root
-      login_password: RoboShop@1
+  community.mysql.mysql_db:
+    state: import
+    name: all
+    target: plugin.sql
+    login_user: root
+    login_password: RoboShop@1
 

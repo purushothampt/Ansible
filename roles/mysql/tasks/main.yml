@@ -1,3 +1,34 @@
+#
+#    1. Now a default root password will be generated and given in the log file.
+#
+#    ```bash
+#    # grep temp /var/log/mysqld.log
+#    ```
+#
+#    1. Next, We need to change the default root password in order to start using the database service. Use password `RoboShop@1` or any other as per your choice. Rest of the options you can choose `No`
+#
+#    ```bash
+#    # mysql_secure_installation
+#    ```
+#
+#    1. You can check the new password working or not using the following command in MySQL
+#
+#    First lets connect to MySQL
+#
+#    ```bash
+#    # mysql -uroot -pRoboShop@1
+#    ```
+#
+#    Once after login to MySQL prompt then run this SQL Command.
+#
+#    ```sql
+#    > uninstall plugin validate_password;
+#    ```
+#
+#    ## **Setup Needed for Application.**
+#
+#    As per the architecture diagram, MySQL is needed by
+#
 #  - Shipping Service
 #
 #    So we need to load that schema into the database, So those applications will detect them and run accordingly.
@@ -15,89 +46,27 @@
 #    # unzip mysql.zip
 #    # cd mysql-main
 #    # mysql -u root -pRoboShop@1 <shipping.sql
-##    ```
+#    ```
 
-- name: Setup MySQL repos
+- name: Setup MySQl repo
   ansible.builtin.copy:
     src: mysql.repo
     dest: /etc/yum.repos.d/mysql.repo
 
-- name: Install MySQL
+- name: Install MySQl
   ansible.builtin.yum:
-    name:
-      - mysql-community-server
-      - MySQL-python
+    name: mysql-community-server
     state: installed
 
 - name: Start MySQL
   ansible.builtin.systemd:
     name: mysqld
-    state: started
     enabled: yes
+    state: started
 
-# check if mysql new password is able to connect to server, if not connected then change the password
-- name: Collect all possible information using passwordless root access
-  mysql_info:
-    login_user: root
-    login_password: RoboShop@1
-  ignore_errors: yes
-  register: mysql_stat
-#
-#- name: Create Default root password
-#  when: mysql_stat.failed
-#  ansible.builtin.shell: grep 'temporary password' /var/log/mysqld.log | awk '{print $NF}'
-#  register: DEFAULT_ROOT_PASSWORD
-#
-#- name: Copy the command to Set root password
-#  when: mysql_stat.failed
-#  ansible.builtin.copy:
-#    src: rootpass.sql
-#    dest: /tmp/rootpass.sql
-#
-#- name: Set the new root password
-#  when: mysql_stat.failed
-#  ansible.builtin.shell: mysql --connect-expired-password -uroot -p"{{DEFAULT_ROOT_PASSWORD.stdout}}" </tmp/rootpass.sql
-
-# above commented statements can be written in block as below
-
-- name: Block for resetting password
-  when: mysql_stat.failed
-  block:
-    - name: Create Default root password
-      ansible.builtin.shell: grep 'temporary password' /var/log/mysqld.log | awk '{print $NF}'
-      register: DEFAULT_ROOT_PASSWORD
-
-    - name: Copy the command to Set root password
-      ansible.builtin.copy:
-        src: rootpass.sql
-        dest: /tmp/rootpass.sql
-
-    - name: Set the new root password
-      ansible.builtin.shell: mysql --connect-expired-password -uroot -p"{{DEFAULT_ROOT_PASSWORD.stdout}}" </tmp/rootpass.sql
-
-- name: check validate password plugin is removed
-  ansible.builtin.shell: echo 'show plugins' | mysql -uroot -pRoboShop@1 | grep validate_password
-  register: plugin_info
-  ignore_errors: yes
-
-- name: unsinstall validate password plugin
-  when: plugin_info.rc == 0
-  community.mysql.mysql_db:
-    state: import
-    name: all
-    target: validatepass.sql
+# Check if Password is changed
+- name: Collect all possible information
+  community.mysql.mysql_info:
     login_user: root
     login_password: RoboShop@1
 
-- name: Download and Extract MySQL
-  include_role:
-    name: common
-    tasks_from: download
-
-- name: Load Schema
-  community.mysql.mysql_db:
-    state: import
-    name: all
-    target: /tmp/mysql-main/shipping.sql
-    login_user: root
-    login_password: RoboShop@1

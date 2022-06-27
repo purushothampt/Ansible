@@ -1,0 +1,51 @@
+- name: Install Maven package
+  ansible.builtin.yum:
+    name:
+      - maven
+    state: installed
+
+- name: Add Application user
+  ansible.builtin.user:
+    name: roboshop
+    comment: Roboshop Project Application user
+
+- name: Extract and Download {{COMPONENT}} components
+  include_role:
+    name: common
+    tasks_from: download
+
+- name: clear all the old contents
+  ansible.builtin.file:
+    path: /home/roboshop/{{COMPONENT}}
+    state: absent
+
+- name: copy {{COMPONENT}} App content
+  ansible.builtin.copy:
+    src: /tmp/{{COMPONENT}}-main/
+    dest: /home/roboshop/{{COMPONENT}}/
+    remote_src: yes
+  become_user: roboshop
+
+- name: Install maven packages and dependencies
+  ansible.builtin.shell: mvn clean package && mv target/shipping-1.0.jar shipping.jar
+  args:
+    chdir: /home/roboshop/{{COMPONENT}}
+  become_user: roboshop
+
+- name: Copy System.d Service file
+  ansible.builtin.copy:
+    src: systemd.service
+    dest: /etc/systemd/system/{{COMPONENT}}.service
+
+- name: Start {{COMPONENT}} service
+  ansible.builtin.systemd:
+    name: "{{COMPONENT}}"
+    state: restarted
+    enabled: yes
+    daemon_reload: yes
+
+
+
+
+
+

@@ -92,6 +92,7 @@
 - name: Check for Plugins Installed/Uninstalled
   ansible.builtin.shell: echo 'show plugins' | mysql -uroot -pRoboShop@1 | grep validate_password
   register: plugin_info
+  ignore_errors: yes
 
 - name: Copy the Plugin and Uninstall
   when: plugin_info.rc == 0

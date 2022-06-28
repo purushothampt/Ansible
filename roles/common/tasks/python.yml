@@ -38,6 +38,19 @@
   ansible.builtin.debug:
     msg: "{{USER_INFO}}"
 
+- name: Update user in Payment ini file
+  ansible.builtin.lineinfile:
+    path: payment.ini
+    regexp: '^uid'
+    line: uid={{USER_INFO.uid}}
+
+
+- name: Update group in Payment ini file
+  ansible.builtin.lineinfile:
+    path: payment.ini
+    regexp: '^gid'
+    line: gid={{USER_INFO.group}}
+
 - name: setup Systemd
   ansible.builtin.systemd:
     name: payment

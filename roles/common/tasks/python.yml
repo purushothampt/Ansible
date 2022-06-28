@@ -10,6 +10,7 @@
   ansible.builtin.user:
     name: roboshop
     comment: Roboshop Project Application user
+  register: USER_INFO
 
 - name: Download and Extract Frontend
   include_role:
@@ -32,6 +33,10 @@
   ansible.builtin.pip:
     requirements: /home/roboshop/{{COMPONENT}}/requirements.txt
     executable: pip3
+
+- name: Display User Info
+  ansible.builtin.debug:
+    msg: "{{USER_INFO}}"
 
 - name: setup Systemd
   ansible.builtin.systemd:

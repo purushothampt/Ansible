@@ -1,8 +1,10 @@
 - name: Install Python36
   ansible.builtin.yum:
-    - python36
-    - gcc
-    - python3-devel
+    name:
+      - python36
+      - gcc
+      - python3-devel
+    state: installed
 
 - name: Add Application user
   ansible.builtin.user:

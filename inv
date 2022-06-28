@@ -11,6 +11,6 @@ user.roboshop.internal
 [CART]
 cart.roboshop.internal
 [MYSQL]
-172.31.14.19
+mysql.roboshop.internal
 [SHIPPING]
 shipping.roboshop.internal

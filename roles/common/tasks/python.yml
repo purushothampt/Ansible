@@ -40,20 +40,20 @@
 
 - name: Update user in Payment ini file
   ansible.builtin.lineinfile:
-    path: payment.ini
+    path: /home/roboshop/{{COMPONENT}}/payment.ini
     regexp: '^uid'
     line: uid={{USER_INFO.uid}}
 
 
 - name: Update group in Payment ini file
   ansible.builtin.lineinfile:
-    path: payment.ini
+    path: /home/roboshop/{{COMPONENT}}/payment.ini
     regexp: '^gid'
     line: gid={{USER_INFO.group}}
 
-- name: setup Systemd
+- name: setup {{COMPONENT}} Systemd
   ansible.builtin.systemd:
-    name: payment
+    name: "{{COMPONENT}}"
     state: restarted
     enabled: yes
     daemon_reload: yes

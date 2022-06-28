@@ -1,11 +1,12 @@
 - name: Setup YUM repositories for RabbitMQ
   ansible.builtin.shell: curl -s https://packagecloud.io/install/repositories/rabbitmq/rabbitmq-server/script.rpm.sh | sudo bash
 
-- name: Install RabbitMQ
+- name: Install Erlang and RabbitMQ
   ansible.builtin.yum:
-    - https://github.com/rabbitmq/erlang-rpm/releases/download/v23.2.6/erlang-23.2.6-1.el7.x86_64.rpm
-    - rabbitmq-server
-  state: installed
+    name:
+      - https://github.com/rabbitmq/erlang-rpm/releases/download/v23.2.6/erlang-23.2.6-1.el7.x86_64.rpm
+      - rabbitmq-server
+    state: installed
 
 - name: Start RabbitMQ
   ansible.builtin.systemd:

@@ -1,4 +1,4 @@
-- name: Configure Catalogue Component
+- name: Configure payment Component
   include_role:
     name: common
     tasks_from: python

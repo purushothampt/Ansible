@@ -1,0 +1,39 @@
+- name: Install Python36
+  ansible.builtin.yum:
+    - python36
+    - gcc
+    - python3-devel
+
+- name: Add Application user
+  ansible.builtin.user:
+    name: roboshop
+    comment: Roboshop Project Application user
+
+- name: Download and Extract Frontend
+  include_role:
+    name: common
+    tasks_from: download
+
+- name: clear all the old contents
+  ansible.builtin.file:
+    path: /home/roboshop/{{COMPONENT}}
+    state: absent
+
+- name: copy {{COMPONENT}} App content
+  ansible.builtin.copy:
+    src: /tmp/{{COMPONENT}}-main/
+    dest: /home/roboshop/{{COMPONENT}}/
+    remote_src: yes
+  become_user: roboshop
+
+- name: Install Python dependencies
+  ansible.builtin.pip:
+    requirements: /home/roboshop/{{COMPONENT}}/requirement.txt
+    executable: pip3
+
+- name: setup Systemd
+  ansible.builtin.systemd:
+    name: payment
+    state: restarted
+    enabled: yes
+    daemon_reload: yes

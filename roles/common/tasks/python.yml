@@ -34,10 +34,6 @@
     requirements: /home/roboshop/{{COMPONENT}}/requirements.txt
     executable: pip3
 
-- name: Display User Info
-  ansible.builtin.debug:
-    msg: "{{USER_INFO}}"
-
 - name: Update user in Payment ini file
   ansible.builtin.lineinfile:
     path: /home/roboshop/{{COMPONENT}}/payment.ini
@@ -51,7 +47,7 @@
     regexp: '^gid'
     line: gid={{USER_INFO.group}}
 
-- name: setup {{COMPONENT}} Systemd
+- name: Start {{COMPONENT}} service
   ansible.builtin.systemd:
     name: "{{COMPONENT}}"
     state: restarted

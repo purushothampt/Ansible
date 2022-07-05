@@ -47,14 +47,8 @@
     regexp: '^gid'
     line: gid={{USER_INFO.group}}
 
-- name: Copy System.d Service file
-  ansible.builtin.copy:
-    src: systemd.service
-    dest: /etc/systemd/system/{{COMPONENT}}.service
+- name: Configure SystemD for {{COMPONENT}} component
+  include_role:
+    name: common
+    tasks_from: systemd
 
-- name: Start {{COMPONENT}} service
-  ansible.builtin.systemd:
-    name: "{{COMPONENT}}"
-    state: restarted
-    enabled: yes
-    daemon_reload: yes

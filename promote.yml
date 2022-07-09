@@ -1,0 +1,6 @@
+- name: Sample Test on Promote
+  hosts: localhost
+  tasks:
+    - name: Prmote module
+      ansible.bulitin.debug:
+      msg: ENV = {{ENV}}

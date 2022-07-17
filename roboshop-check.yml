@@ -7,6 +7,7 @@
         image: ami-0c88f8ebde436272a
         wait: yes
         group_id: sg-0bbb0b4aedca4a12f
+        region: us-east-1
         count: 1
         instance_tags:
           name: ansible-role-check-instance

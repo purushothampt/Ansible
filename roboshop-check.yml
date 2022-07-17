@@ -1,0 +1,14 @@
+- name: Create an EC2 Instance using ansible
+  hosts: localhost
+  tasks:
+    - name: Create an EC2 Instance
+      amazon.aws.ec2:
+        instance_type: t3.micro
+        image: ami-0c88f8ebde436272a
+        wait: yes
+        group_id: sg-0bbb0b4aedca4a12f
+        count: 1
+        instance_tags:
+          name: ansible-role-check-instance
+
+

@@ -28,7 +28,7 @@
         wait: true
         region: "{{ region }}"
         instance_tags:
-          Name: ansible-testing
+          Name: ansible-testing1
       register: ec2
 
     - name: Add new instance to host group
@@ -59,4 +59,6 @@
       amazon.aws.ec2:
         state: 'absent'
         instance_ids: '{{ ec2.instance_ids }}'
+        region: us-east-1
+
 
